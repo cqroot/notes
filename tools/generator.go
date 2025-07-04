@@ -53,7 +53,7 @@ var (
 )
 
 func main() {
-	tmplPath := "./README.md.tmpl"
+	tmplPath := "./tools/README.md.tmpl"
 	tmpl, err := template.New(filepath.Base(tmplPath)).Funcs(funcMap).ParseFiles(tmplPath)
 	CheckErr(err)
 

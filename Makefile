@@ -3,7 +3,7 @@ generate:
 	@printf '\033[0;36m%s\033[0m\n' "=================================================="
 	@printf '\033[0;36m%s\033[0m\n' "*  Generate                                      *"
 	@printf '\033[0;36m%s\033[0m\n' "=================================================="
-	@go run generator.go
+	@go run ./tools/generator.go
 	@echo
 
 .PHONY: preview
