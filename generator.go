@@ -9,6 +9,12 @@ import (
 	"text/template"
 )
 
+func CheckErr(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
 type Data struct {
 	Categories []string
 	Notes      map[string][]string
@@ -27,13 +33,16 @@ func ToNoteLink(note string) string {
 
 var (
 	data = Data{
-		Categories: []string{"Linux", "Go"},
+		Categories: []string{"Linux", "Go", "Misc"},
 		Notes: map[string][]string{
 			"Linux": {
 				"【Linux】命令速查表.md",
 			},
 			"Go": {
 				"【Go】slice.md",
+			},
+			"Misc": {
+				"【Misc】键盘布局方案.md",
 			},
 		},
 	}
@@ -46,14 +55,10 @@ var (
 func main() {
 	tmplPath := "./README.md.tmpl"
 	tmpl, err := template.New(filepath.Base(tmplPath)).Funcs(funcMap).ParseFiles(tmplPath)
-	if err != nil {
-		panic(err)
-	}
+	CheckErr(err)
 
 	outputFile, err := os.OpenFile("./README.md", os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
-	if err != nil {
-		panic(err)
-	}
+	CheckErr(err)
 	defer outputFile.Close()
 
 	tmpl.Execute(outputFile, data)
