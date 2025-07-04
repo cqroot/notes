@@ -79,9 +79,7 @@ func nextslicecap(newLen, oldCap int) int {
 2. 如果扩容前的容量小于 1024，新容量等于两倍扩容前的容量；
 3. 如果扩容前的容量大于等于 1024，新容量初始值等于扩容前的容量，每次增加 25%，直到值大于新长度。
 
-如何理解这次变动（https://go.googlesource.com/go/+/2dda92ff6f9f07eeb110ecbf0fc2d7a0ddd27f9d）呢？
-
-比较下两个方式的扩容因子：
+如何理解这次[变动](https://go.googlesource.com/go/+/2dda92ff6f9f07eeb110ecbf0fc2d7a0ddd27f9d)呢？比较下两个方式的扩容因子：
 
 | 起始容量 | Go 1.18 之前扩容因子 | Go 1.18 及之后扩容因子 |
 | :------: | :------------------: | :--------------------: |
