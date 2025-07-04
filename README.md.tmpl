@@ -1,0 +1,9 @@
+# Keith 的笔记
+
+{{ range $category := .Categories }}
+- {{ $category }}
+  {{- $notes := index $.Notes $category -}}
+  {{- range $note := $notes }}
+  - [{{ ToNoteName $note $category -}}]({{ ToNoteLink $note }})
+  {{- end }}
+{{- end }}
