@@ -18,16 +18,17 @@ preview:
 .PHONY: check-go
 check-go:
 	@printf '\033[0;36m%s\033[0m\n' "=================================================="
-	@printf '\033[0;36m%s\033[0m\n' "*                   Check GO                     *"
+	@printf '\033[0;36m%s\033[0m\n' "*                   Check Go                     *"
 	@printf '\033[0;36m%s\033[0m\n' "=================================================="
 	(cd ./tools; golangci-lint run)
 	(cd ./tools; gofumpt -l .)
+	@echo
 
 # 检查所有笔记文件是否需要格式化
 .PHONY: check-md
-check:
+check-md:
 	@printf '\033[0;36m%s\033[0m\n' "=================================================="
-	@printf '\033[0;36m%s\033[0m\n' "*                   Check MD                     *"
+	@printf '\033[0;36m%s\033[0m\n' "*                   Check Md                     *"
 	@printf '\033[0;36m%s\033[0m\n' "=================================================="
 	@prettier -c docs
 

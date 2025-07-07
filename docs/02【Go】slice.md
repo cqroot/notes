@@ -1,4 +1,4 @@
-# 【Go】slice
+# Go slice
 
 ## 1. 数组和 slice
 

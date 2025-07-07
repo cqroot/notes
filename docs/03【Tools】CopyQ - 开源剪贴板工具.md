@@ -1,4 +1,4 @@
-# CopyQ - 剪贴板工具
+# CopyQ - 开源剪贴板工具
 
 [CopyQ](https://hluk.github.io/CopyQ/) [GitHub](https://github.com/hluk/CopyQ)
 

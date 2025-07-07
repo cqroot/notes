@@ -1,4 +1,4 @@
-# MPV - 视频播放器
+# MPV - 开源视频播放器
 
 ![screenshot-mpv.jpg](https://pics-1324197765.cos.ap-shanghai.myqcloud.com/screenshot-mpv.jpg)
 
