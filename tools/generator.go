@@ -20,6 +20,8 @@ type Data struct {
 	Notes      map[string][]string
 }
 
+// ToNoteCategory 从类似 `01【Linux】笔记名.md` 这样形式的字符串中提取 `Linux` 关键字
+// 如何传入的字符串不是该种形式，返回源字符串
 func ToNoteCategory(note string) string {
 	if len(note) < 2 {
 		return note
@@ -38,28 +40,33 @@ func ToNoteCategory(note string) string {
 	return note[len("【"):endIdx]
 }
 
-func ToNoteName(note, category string) string {
+// ToNoteName 从类似 `01【Linux】笔记名.md` 这样形式的字符串中提取 `笔记名` 关键字
+// 如何传入的字符串不是该种形式，返回源字符串
+func ToNoteName(note string) string {
 	if len(note) < 2 {
 		return note
 	}
 	note = note[2:]
 
-	var s string
-	s, _ = strings.CutPrefix(note, fmt.Sprintf("【%s】", category))
-	s, _ = strings.CutSuffix(s, ".md")
-	return s
+	endIdx := strings.Index(note, "】")
+	if endIdx == -1 {
+		return note
+	}
+
+	note = note[endIdx+len("】"):]
+	note, _ = strings.CutSuffix(note, ".md")
+	return note
 }
 
+// ToNoteLink 返回文件 "./docs/{note}" URL 编码后的字符串
 func ToNoteLink(note string) string {
 	return url.QueryEscape(fmt.Sprintf("./docs/%s", note))
 }
 
-var (
-	funcMap = template.FuncMap{
-		"ToNoteName": ToNoteName,
-		"ToNoteLink": ToNoteLink,
-	}
-)
+var funcMap = template.FuncMap{
+	"ToNoteName": ToNoteName,
+	"ToNoteLink": ToNoteLink,
+}
 
 func GetNoteData() Data {
 	data := Data{
@@ -92,9 +99,10 @@ func main() {
 	tmpl, err := template.New(filepath.Base(tmplPath)).Funcs(funcMap).ParseFiles(tmplPath)
 	CheckErr(err)
 
-	outputFile, err := os.OpenFile("./README.md", os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
+	outputFile, err := os.OpenFile("./README.md", os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0o666)
 	CheckErr(err)
 	defer outputFile.Close()
 
-	tmpl.Execute(outputFile, GetNoteData())
+	err = tmpl.Execute(outputFile, GetNoteData())
+	CheckErr(err)
 }

@@ -3,6 +3,6 @@
 - {{ $category }}
   {{- $notes := index $.Notes $category -}}
   {{- range $note := $notes }}
-  - [{{ ToNoteName $note $category -}}]({{ ToNoteLink $note }})
+  - [{{ ToNoteName $note -}}]({{ ToNoteLink $note }})
   {{- end }}
 {{- end }}

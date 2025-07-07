@@ -14,13 +14,22 @@ generate:
 preview:
 	@glow -w 0 ./README.md
 
+# 检查 generator 代码
+.PHONY: check-go
+check-go:
+	@printf '\033[0;36m%s\033[0m\n' "=================================================="
+	@printf '\033[0;36m%s\033[0m\n' "*                   Check GO                     *"
+	@printf '\033[0;36m%s\033[0m\n' "=================================================="
+	(cd ./tools; golangci-lint run)
+	(cd ./tools; gofumpt -l .)
+
 # 检查所有笔记文件是否需要格式化
-.PHONY: check
+.PHONY: check-md
 check:
 	@printf '\033[0;36m%s\033[0m\n' "=================================================="
-	@printf '\033[0;36m%s\033[0m\n' "*                     Check                      *"
+	@printf '\033[0;36m%s\033[0m\n' "*                   Check MD                     *"
 	@printf '\033[0;36m%s\033[0m\n' "=================================================="
 	@prettier -c docs
 
 .PHONY: run
-run: generate preview check
+run: check-go generate preview check-md
