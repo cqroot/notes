@@ -33,13 +33,16 @@ func ToNoteLink(note string) string {
 
 var (
 	data = Data{
-		Categories: []string{"Linux", "Go", "Misc"},
+		Categories: []string{"Linux", "Go", "Tools", "Misc"},
 		Notes: map[string][]string{
 			"Linux": {
 				"【Linux】命令速查表.md",
 			},
 			"Go": {
 				"【Go】slice.md",
+			},
+			"Tools": {
+				"【Tools】MPV.md",
 			},
 			"Misc": {
 				"【Misc】键盘布局方案.md",
