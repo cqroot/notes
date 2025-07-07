@@ -7,5 +7,6 @@
 - Tools
   - [CopyQ](.%2Fdocs%2F03%E3%80%90Tools%E3%80%91CopyQ.md)
   - [MPV](.%2Fdocs%2F03%E3%80%90Tools%E3%80%91MPV.md)
+  - [好用的站点推荐](.%2Fdocs%2F03%E3%80%90Tools%E3%80%91%E5%A5%BD%E7%94%A8%E7%9A%84%E7%AB%99%E7%82%B9%E6%8E%A8%E8%8D%90.md)
 - Misc
   - [键盘布局方案](.%2Fdocs%2F04%E3%80%90Misc%E3%80%91%E9%94%AE%E7%9B%98%E5%B8%83%E5%B1%80%E6%96%B9%E6%A1%88.md)
