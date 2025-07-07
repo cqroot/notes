@@ -20,7 +20,30 @@ type Data struct {
 	Notes      map[string][]string
 }
 
+func ToNoteCategory(note string) string {
+	if len(note) < 2 {
+		return note
+	}
+	note = note[2:]
+
+	if !strings.HasPrefix(note, "【") {
+		return note
+	}
+
+	endIdx := strings.Index(note, "】")
+	if endIdx == -1 {
+		return note
+	}
+
+	return note[len("【"):endIdx]
+}
+
 func ToNoteName(note, category string) string {
+	if len(note) < 2 {
+		return note
+	}
+	note = note[2:]
+
 	var s string
 	s, _ = strings.CutPrefix(note, fmt.Sprintf("【%s】", category))
 	s, _ = strings.CutSuffix(s, ".md")
@@ -32,28 +55,37 @@ func ToNoteLink(note string) string {
 }
 
 var (
-	data = Data{
-		Categories: []string{"Linux", "Go", "Tools", "Misc"},
-		Notes: map[string][]string{
-			"Linux": {
-				"【Linux】命令速查表.md",
-			},
-			"Go": {
-				"【Go】slice.md",
-			},
-			"Tools": {
-				"【Tools】MPV.md",
-			},
-			"Misc": {
-				"【Misc】键盘布局方案.md",
-			},
-		},
-	}
 	funcMap = template.FuncMap{
 		"ToNoteName": ToNoteName,
 		"ToNoteLink": ToNoteLink,
 	}
 )
+
+func GetNoteData() Data {
+	data := Data{
+		Categories: []string{"Linux", "Go", "Tools", "Misc"},
+		Notes: map[string][]string{
+			"Linux": {},
+			"Go":    {},
+			"Tools": {},
+			"Misc":  {},
+		},
+	}
+
+	entries, err := os.ReadDir("./docs/")
+	CheckErr(err)
+
+	for _, entry := range entries {
+		name := entry.Name()
+		if strings.HasPrefix(name, "_") {
+			continue
+		}
+
+		data.Notes[ToNoteCategory(name)] = append(data.Notes[ToNoteCategory(name)], name)
+	}
+
+	return data
+}
 
 func main() {
 	tmplPath := "./tools/README.md.tmpl"
@@ -64,5 +96,5 @@ func main() {
 	CheckErr(err)
 	defer outputFile.Close()
 
-	tmpl.Execute(outputFile, data)
+	tmpl.Execute(outputFile, GetNoteData())
 }
