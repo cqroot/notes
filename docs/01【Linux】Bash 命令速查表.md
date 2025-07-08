@@ -1,4 +1,4 @@
-# Linux 命令速查表
+# Linux Bash 命令速查表
 
 ## 1. 基础命令
 
@@ -66,29 +66,94 @@
 
 ## 2. 代码片段
 
-### 2.1. 比较两个目录
+### 2.1. 获取脚本所在路径
+
+```bash
+# 脚本所在路径
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+
+# 脚本所在路径的父路径
+PARENT_DIR=$(dirname "${SCRIPT_DIR}")
+```
+
+### 2.2. 逐行处理输出
+
+#### 2.2.1. 逐行处理文件
+
+```bash
+while read -r line; do
+    echo "${line}"
+done <FILENAME
+```
+
+#### 2.2.2. 逐行处理命令输出
+
+```bash
+while read -r line; do
+    echo "${line}"
+done < <(ls -l)
+```
+
+#### 2.2.3. 逐行处理变量内容
+
+```bash
+sometext=$(ls -l)
+while read -r line; do
+    echo "${line}"
+done <<<"${sometext}"
+```
+
+### 2.3. 打印连续数字
+
+```bash
+# 打印数字 1 到 10
+seq 1 10
+
+# 打印等宽的数字 1 到 10
+seq -w 1 10
+```
+
+### 2.4. Find
+
+#### 2.4.1. 找出大于某个大小的文件
+
+```bash
+find . -type f -size +100M
+find . -type f -size +100M -printf "%k KB %p\n" | sort -rnk 1
+```
+
+#### 2.4.2. 找出并且打印文件大小
+
+```bash
+find . -name '*.txt' -exec ls -lh {}
+find . -name '*.txt' -printf "%p %k KB\n"
+```
+
+## 3. 常用操作
+
+### 3.1. 比较两个目录
 
 ```bash
 diff --brief --recursive dir1 dir2
 ```
 
-### 2.2. 输出变化
+### 3.2. 输出变化
 
-#### 2.2.1 改变输出的 tab 大小
+#### 3.2.1. 改变输出的 tab 大小
 
 ```bash
 cat FILE | expand -t4
 ```
 
-#### 2.3.2. 将输出按表格输出
+#### 3.3.2. 将输出按表格输出
 
 ```bash
 echo STRING | column -t
 ```
 
-### 2.3. 用户管理
+### 3.3. 用户管理
 
-#### 2.3.1. 设置执行 sudo 不需要密码
+#### 3.3.1. 设置执行 sudo 不需要密码
 
 新建文件 `/etc/sudoers.d/YOURUSERNAME`，内容如下：
 
@@ -98,7 +163,7 @@ YOURUSERNAME ALL=(ALL) NOPASSWD: ALL
 
 你也可以选择将其追加到 `/etc/sudoers` 文件中。
 
-#### 2.3.2. 在多次错误输入后用户被锁定
+#### 3.3.2. 在多次错误输入后用户被锁定
 
 可以修改文件 `/etc/security/faillock.conf` 来改变用户允许输入密码错误的次数。
 
@@ -110,7 +175,7 @@ YOURUSERNAME ALL=(ALL) NOPASSWD: ALL
 
 将注释去掉，将 3 改的足够大即可。
 
-### 2.4. 改变 SSH 超时断连时间
+### 3.4. 改变 SSH 超时断连时间
 
 SSH 超时后断连并提示：
 
@@ -123,7 +188,7 @@ timed out waiting for input: auto-logout
 1. 超时时间设置为一小时：`TMOUT=3600`
 2. 没有超时时间：`TMOUT=`
 
-### 2.5. 统计某列中所有值出现的次数
+### 3.5. 统计某列中所有值出现的次数
 
 ```bash
 xxx | sort | uniq -c | sort -nr
@@ -133,7 +198,7 @@ xxx | sort | uniq -c | sort -nr
 - `uniq -c`: 连续的重复项只会显示一个。`-c` 会在每个项目前添加重复次数。
 - `sort -nr`: 排序。`-n` 表示按数字排序。`-r` 会按照从大到小排序。
 
-### 2.6. 替换目录中某个字符串
+### 3.6. 替换目录中某个字符串
 
 ```bash
 grep -rl OLD_STR | xargs -i sed -i 's/OLD_STR/NEW_STR/g' {}
