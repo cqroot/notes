@@ -6,13 +6,8 @@ generate:
 	@printf '\033[0;36m%s\033[0m\n' "=================================================="
 	@printf '\033[0;36m%s\033[0m\n' "*                    Generate                    *"
 	@printf '\033[0;36m%s\033[0m\n' "=================================================="
-	@go run ./tools/generator.go
-	@echo
-
-# 预览 README.md
-.PHONY: preview
-preview:
-	@glow -w 0 ./README.md
+	@go run ./tools/note.go generate
+	@go run ./tools/note.go list
 
 # 检查 generator 代码
 .PHONY: check-go
@@ -33,4 +28,4 @@ check-md:
 	@prettier -c docs
 
 .PHONY: run
-run: check-go generate preview check-md
+run: check-go generate check-md
