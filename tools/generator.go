@@ -9,6 +9,11 @@ import (
 	"text/template"
 )
 
+const (
+	DOCS_DIR  = "./docs"
+	TMPL_PATH = "./tools/README.md.tmpl"
+)
+
 func CheckErr(err error) {
 	if err != nil {
 		panic(err)
@@ -58,9 +63,9 @@ func ToNoteName(note string) string {
 	return note
 }
 
-// ToNoteLink 返回文件 "./docs/{note}" URL 编码后的字符串
+// ToNoteLink 返回文件 "{DOCS_DIR}/{note}" URL 编码后的字符串
 func ToNoteLink(note string) string {
-	return url.QueryEscape(fmt.Sprintf("./docs/%s", note))
+	return url.QueryEscape(fmt.Sprintf("%s/%s", DOCS_DIR, note))
 }
 
 var funcMap = template.FuncMap{
@@ -69,17 +74,10 @@ var funcMap = template.FuncMap{
 }
 
 func GetNoteData() Data {
-	data := Data{
-		Categories: []string{"Linux", "Go", "Tools", "Misc"},
-		Notes: map[string][]string{
-			"Linux": {},
-			"Go":    {},
-			"Tools": {},
-			"Misc":  {},
-		},
-	}
+	categories := make([]string, 0)
+	notes := make(map[string][]string)
 
-	entries, err := os.ReadDir("./docs/")
+	entries, err := os.ReadDir(DOCS_DIR)
 	CheckErr(err)
 
 	for _, entry := range entries {
@@ -88,15 +86,23 @@ func GetNoteData() Data {
 			continue
 		}
 
-		data.Notes[ToNoteCategory(name)] = append(data.Notes[ToNoteCategory(name)], name)
+		currCategory := ToNoteCategory(name)
+		if len(categories) == 0 || categories[len(categories)-1] != currCategory {
+			categories = append(categories, currCategory)
+			notes[currCategory] = make([]string, 0)
+		}
+
+		notes[currCategory] = append(notes[currCategory], name)
 	}
 
-	return data
+	return Data{
+		Categories: categories,
+		Notes:      notes,
+	}
 }
 
 func main() {
-	tmplPath := "./tools/README.md.tmpl"
-	tmpl, err := template.New(filepath.Base(tmplPath)).Funcs(funcMap).ParseFiles(tmplPath)
+	tmpl, err := template.New(filepath.Base(TMPL_PATH)).Funcs(funcMap).ParseFiles(TMPL_PATH)
 	CheckErr(err)
 
 	outputFile, err := os.OpenFile("./README.md", os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0o666)
