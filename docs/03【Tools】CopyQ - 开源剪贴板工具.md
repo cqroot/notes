@@ -2,30 +2,45 @@
 
 [CopyQ](https://hluk.github.io/CopyQ/) [GitHub](https://github.com/hluk/CopyQ)
 
-## 安装
+## 1. 安装 CopyQ
 
-### Windows (Scoop)
+### 1.1. Windows (Scoop)
 
 ```bash
 scoop bucket add extras
 scoop install extras/copyq
 ```
 
-## 配置
+## 2. 设置开机启动
+
+### 2.1. Windows
+
+1. 按下 `Win + R` 打开“运行”对话框，输入 `shell:startup` 后回车。
+2. 此时会打开当前用户的启动目录：`C:\Users\<用户名>\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`。
+3. 找到 CopyQ 的安装路径（通常为 `C:\Program Files\CopyQ\copyq.exe`）。
+4. 右键点击 `copyq.exe`，选择“发送到 → 桌面快捷方式”。
+5. 将桌面上生成的快捷方式拖拽到刚打开的启动文件夹中。
+
+## 3. 配置 CopyQ
 
 通过 `File` 菜单的 `Preferences` 项打开设置窗口。
 
-### General 通用
+### 3.1. General 通用
 
 - 勾选 `Vi style navigation`。
 
-### Layout 布局
+### 3.2. Layout 布局
 
 接着修改应用的布局：
 
 - 勾选 `Hide toolbar`、`Hide toolbar labels`，不显示工具条。
 - 取消勾选 `Tab Tree`，让标签页横向显示。
+- 取消勾选 `Show Item Count`，不显示项目数。
 
-### Shortcuts 快捷键
+### 3.3. Shortcuts 快捷键
 
 - `Show/hide main window`：使用 `Ctrl + Alt + E` 来打开隐藏 `CopyQ` 主界面。
+
+## 4. 创建新 Tab
+
+通过 `Tabs` 菜单的 `New Tab` 项来新建 Tab。个人推荐至少有两个 Tab，一个 `&clipboard` 和 `&snippets`。
