@@ -136,7 +136,9 @@ func GenerateReadme() {
 
 	outputFile, err := os.OpenFile("./README.md", os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0o666)
 	CheckErr(err)
-	defer outputFile.Close()
+	defer func() {
+		_ = outputFile.Close()
+	}()
 
 	err = tmpl.Execute(outputFile, GetNoteData())
 	CheckErr(err)
