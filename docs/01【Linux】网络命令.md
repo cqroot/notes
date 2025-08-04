@@ -1,0 +1,55 @@
+# 01 Linux Network Commands
+
+## 1. ping
+
+`ping` 命令有 iputils 包提供。安装方法是：
+
+```bash
+sudo pacman -S iputils
+```
+
+| Command                             | Description                                               |
+| :---------------------------------- | :-------------------------------------------------------- |
+| `ping <DESTINATION>`                | 向目标发送 ICMP ECHO_REQUEST 数据包，检测网络连通性和延迟 |
+| `ping <DESTINATION> -c <COUNT>`     | 发送 COUNT 数量数据包后停止                               |
+| `ping <DESTINATION> -I <INTERFACE>` | 指定发送接口 INTERFACE                                    |
+
+## 2. iproute2 vs net-tools
+
+`ip`、`ss` 等命令由 iproute2 包提供。安装方法是：
+
+```bash
+# Arch Linux
+sudo pacman -S iproute2
+```
+
+`ifconfig`、`netstat`、`route`、`arp` 等命令由 net-tools 包提供。
+
+现代系统更推荐使用 iproute2，原因有：
+
+- `net-tools` 已停止更新，主流 Linux 发行版默认仅预装 iproute2；
+- `net-tools` 不支持策略路由等关键特性；
+- `iproute2` 支持 json 格式输出：`ip -j[son] {COMMAND}`，如 `ip -json addr` 或 `ip -j a`。
+
+### 2.1. 常用命令对照表
+
+| DESCRIPTION                     | IPROUTE2                         | SHORT                     | NET-TOOLS       |
+| :------------------------------ | :------------------------------- | ------------------------- | --------------- |
+| 显示网络接口配置信息            | `ip addr`                        | `ip a`                    | `ifconfig -a`   |
+| 显示路由策略规则                | `ip rule show`                   | `ip rule`                 |                 |
+| 显示主路由表                    | `ip route show`                  | `ip r`                    | `route -n`      |
+| 显示指定路由表                  | `ip route show table <SELECTOR>` | `ip r s table <SELECTOR>` |                 |
+| 显示 ARP 缓存（IP-MAC映射）     | `ip neigh show`                  | `ip n`                    | `arp -n`        |
+| 查看所有 TCP 监听端口及进程信息 | `ss -tlnp`                       |                           | `netstat -tlnp` |
+
+### 2.2. 查询 TCP 套接字
+
+- 如果需要查看所有 TCP 监听端口及进程信息，`iproute2` 包使用命令 `ss -tlnp`，`net-tools` 包使用命令 `netstat -tlnp`。
+- 如果需要查看所有 TCP 端口（包括监听和非监听状态）及进程信息，`iproute2` 包使用命令 `ss -tanp`，`net-tools` 包使用命令 `netstat -tanp`。
+
+- `-t`: 仅显示 TCP 套接字
+- `-a`: 显示所有套接字（包括监听和非监听状态）
+- `-l`: 仅显示监听状态（LISTEN）的套接字
+- `-n`: 以数字格式显示地址/端口（不解析 DNS 和服务名）
+- `-p`: 显示进程信息（PID 和程序名）
+- `-e`: 显示扩展信息（用户 UID 和进程内存等）
