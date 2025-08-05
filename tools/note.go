@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"net/url"
 	"os"
@@ -59,14 +60,37 @@ func ToNoteName(note string) string {
 	return note
 }
 
+// ToNoteTitle 从传入的 markdown 文件中获取第一个 H1 标题。如果没找到返回 ToNoteName(note)
+func ToNoteTitle(note string) string {
+	file, err := os.Open(filepath.Join(DOCS_DIR, note))
+	if err != nil {
+		return ToNoteName(note)
+	}
+	defer func() {
+		_ = file.Close()
+	}()
+
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		line := scanner.Text()
+
+		if strings.HasPrefix(line, "# ") {
+			return strings.TrimPrefix(line, "# ")
+		}
+	}
+
+	return ToNoteName(note)
+}
+
 // ToNoteLink 返回文件 "{DOCS_DIR}/{note}" URL 编码后的字符串
 func ToNoteLink(note string) string {
 	return url.QueryEscape(fmt.Sprintf("%s/%s", DOCS_DIR, note))
 }
 
 var funcMap = template.FuncMap{
-	"ToNoteName": ToNoteName,
-	"ToNoteLink": ToNoteLink,
+	"ToNoteName":  ToNoteName,
+	"ToNoteTitle": ToNoteTitle,
+	"ToNoteLink":  ToNoteLink,
 }
 
 func GetNoteData() Data {
@@ -128,7 +152,7 @@ func ListNotes() {
 		for _, note := range data.Notes[category] {
 			idx += 1
 			fmt.Printf("     %-2d     %s%s     %s\n",
-				idx, category, strings.Repeat(" ", categoryLen-len(category)), ToNoteName(note))
+				idx, category, strings.Repeat(" ", categoryLen-len(category)), ToNoteTitle(note))
 		}
 	}
 	fmt.Println()
