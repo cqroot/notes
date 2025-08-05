@@ -25,40 +25,36 @@ type Data struct {
 	Notes      map[string][]string
 }
 
-// ToNoteCategory 从类似 `01【Linux】笔记名.md` 这样形式的字符串中提取 `Linux` 关键字
+// ToNoteCategory 从类似 `01.category.note-name.md` 这样形式的字符串中提取 `category` 关键字
 // 如何传入的字符串不是该种形式，返回源字符串
 func ToNoteCategory(note string) string {
-	if len(note) < 2 {
+	if len(note) < 3 {
 		return note
 	}
-	note = note[2:]
+	note = note[3:]
 
-	if !strings.HasPrefix(note, "【") {
-		return note
-	}
-
-	endIdx := strings.Index(note, "】")
+	endIdx := strings.Index(note, ".")
 	if endIdx == -1 {
 		return note
 	}
 
-	return note[len("【"):endIdx]
+	return note[:endIdx]
 }
 
-// ToNoteName 从类似 `01【Linux】笔记名.md` 这样形式的字符串中提取 `笔记名` 关键字
+// ToNoteName 从类似 `01.category.note-name.md` 这样形式的字符串中提取 `note-name` 关键字
 // 如何传入的字符串不是该种形式，返回源字符串
 func ToNoteName(note string) string {
-	if len(note) < 2 {
+	if len(note) < 3 {
 		return note
 	}
-	note = note[2:]
+	note = note[3:]
 
-	endIdx := strings.Index(note, "】")
+	endIdx := strings.Index(note, ".")
 	if endIdx == -1 {
 		return note
 	}
 
-	note = note[endIdx+len("】"):]
+	note = note[endIdx+1:]
 	note, _ = strings.CutSuffix(note, ".md")
 	return note
 }
@@ -116,8 +112,16 @@ func ListNotes() {
 	}
 
 	fmt.Println()
-	fmt.Printf("     ID%s     CATEGORY%s     NAME\n", strings.Repeat(" ", idLen-2), strings.Repeat(" ", categoryLen-8))
-	fmt.Printf("     ==%s     ========%s     ====\n", strings.Repeat(" ", idLen-2), strings.Repeat(" ", categoryLen-8))
+	fmt.Printf(
+		"     ID%s     CATEGORY%s     NAME\n",
+		strings.Repeat(" ", idLen-2),
+		strings.Repeat(" ", categoryLen-8),
+	)
+	fmt.Printf(
+		"     ==%s     ========%s     ====\n",
+		strings.Repeat(" ", idLen-2),
+		strings.Repeat(" ", categoryLen-8),
+	)
 
 	idx := 0
 	for _, category := range data.Categories {
