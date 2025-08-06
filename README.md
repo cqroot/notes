@@ -4,6 +4,7 @@
   - [Linux Bash 命令速查表](.%2Fdocs%2F01.linux.bash-cheatsheets.md)
   - [My KDE Plasma 6 Configuration](.%2Fdocs%2F01.linux.my-kde-plasma-6-configuration.md)
   - [Linux Network Commands](.%2Fdocs%2F01.linux.network-commands.md)
+  - [存储](.%2Fdocs%2F01.linux.storage.md)
 - go
   - [Go slice](.%2Fdocs%2F02.go.slice.md)
 - tools
