@@ -15,3 +15,4 @@
   - [好用的站点推荐](.%2Fdocs%2F03.tools.recommended-websites.md)
 - misc
   - [键盘布局方案](.%2Fdocs%2F04.misc.keyboard-layout.md)
+  - [Scoop - Windows 软件包管理器](.%2Fdocs%2F04.misc.scoop.md)
