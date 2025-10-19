@@ -10,6 +10,7 @@
 - go
   - [Go 中 `new` 和 `make` 的区别](.%2Fdocs%2F02.go.new-and-make.md)
   - [Go slice](.%2Fdocs%2F02.go.slice.md)
+  - [Go 类型的零值](.%2Fdocs%2F02.go.zero-values.md)
 - tools
   - [CopyQ - 开源剪贴板工具](.%2Fdocs%2F03.tools.copyq.md)
   - [MPV - 开源视频播放器](.%2Fdocs%2F03.tools.mpv.md)
