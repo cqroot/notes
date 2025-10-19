@@ -91,6 +91,8 @@ var funcMap = template.FuncMap{
 	"ToNoteName":  ToNoteName,
 	"ToNoteTitle": ToNoteTitle,
 	"ToNoteLink":  ToNoteLink,
+	"ToUpper":     strings.ToUpper,
+	"ToLower":     strings.ToLower,
 }
 
 func GetNoteData() Data {
