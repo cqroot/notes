@@ -8,9 +8,9 @@
   - [Linux Network Commands](.%2Fdocs%2F01.linux.network-commands.md)
   - [存储](.%2Fdocs%2F01.linux.storage.md)
 - go
-  - [Go 中 `new` 和 `make` 的区别](.%2Fdocs%2F02.go.new-and-make.md)
-  - [Go slice](.%2Fdocs%2F02.go.slice.md)
-  - [Go 类型的零值](.%2Fdocs%2F02.go.zero-values.md)
+  - [Go 语言中类型的零值](.%2Fdocs%2F02.go.01.zero-values.md)
+  - [Go 语言中 `new` 和 `make` 的区别](.%2Fdocs%2F02.go.02.new-and-make.md)
+  - [Go 语言中的 slice 类型](.%2Fdocs%2F02.go.03.slice.md)
 - tools
   - [CopyQ - 开源剪贴板工具](.%2Fdocs%2F03.tools.copyq.md)
   - [MPV - 开源视频播放器](.%2Fdocs%2F03.tools.mpv.md)
