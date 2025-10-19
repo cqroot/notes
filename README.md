@@ -8,6 +8,7 @@
   - [Linux Network Commands](.%2Fdocs%2F01.linux.network-commands.md)
   - [存储](.%2Fdocs%2F01.linux.storage.md)
 - go
+  - [Go 中 `new` 和 `make` 的区别](.%2Fdocs%2F02.go.new-and-make.md)
   - [Go slice](.%2Fdocs%2F02.go.slice.md)
 - tools
   - [CopyQ - 开源剪贴板工具](.%2Fdocs%2F03.tools.copyq.md)
