@@ -3,7 +3,9 @@
 ## LINUX
 
 - [Linux Bash 命令速查表](.%2Fdocs%2F01.linux.bash-cheatsheets.md)
+- [Linux 命令兼容性](.%2Fdocs%2F01.linux.command-compatibility.md)
 - [Disk Commands](.%2Fdocs%2F01.linux.disk-commands.md)
+- [VirtualBox 安装 CentOS 7](.%2Fdocs%2F01.linux.install-centos-on-virtualbox.md)
 - [Linux iptables](.%2Fdocs%2F01.linux.iptables.md)
 - [My KDE Plasma 6 Configuration](.%2Fdocs%2F01.linux.my-kde-plasma-6-configuration.md)
 - [Linux Network Commands](.%2Fdocs%2F01.linux.network-commands.md)
